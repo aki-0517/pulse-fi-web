@@ -1,5 +1,3 @@
-
-
 const StablecoinsSection = () => {
   const supportedCoins = [
     {
@@ -25,10 +23,10 @@ const StablecoinsSection = () => {
   ];
 
   return (
-    <section id="stablecoins" className="py-32 bg-gradient-to-br from-blue-50 to-white">
+    <section id="stablecoins" className="py-32">
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-24">
-          <h2 className="text-5xl font-bold text-gray-900 mb-8">
+          <h2 className="text-5xl font-bold text-white mb-8">
             Supported <span className="text-blue-600">Stablecoins</span>
           </h2>
         </div>
@@ -37,19 +35,19 @@ const StablecoinsSection = () => {
           {supportedCoins.map((coin, index) => (
             <div
               key={index}
-              className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center"
+              className="bg-white/10 rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center"
             >
               <div className="w-16 h-16 flex items-center justify-center mx-auto mb-6">
                 <img src={coin.logoUrl} alt={`${coin.symbol} logo`} className="w-16 h-16 rounded-full" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">{coin.symbol}</h3>
-              <p className="text-gray-600">{coin.name}</p>
+              <h3 className="text-2xl font-bold text-white mb-2">{coin.symbol}</h3>
+              <p className="text-gray-200">{coin.name}</p>
             </div>
           ))}
         </div>
 
         <div className="text-center">
-          <p className="text-gray-600 text-lg">More coming soon...</p>
+          <p className="text-gray-200 text-lg">More coming soon...</p>
         </div>
       </div>
     </section>

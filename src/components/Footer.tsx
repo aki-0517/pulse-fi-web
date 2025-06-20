@@ -12,7 +12,7 @@ const Tooltip = () => (
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white py-20">
+    <footer className="bg-black/80 backdrop-blur-md text-white py-20">
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-4 gap-12">
           <div className="lg:col-span-1">
