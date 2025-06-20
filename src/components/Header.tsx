@@ -11,7 +11,7 @@ const Header = () => {
         <div className="flex justify-between items-center h-20">
           <Link to="/" className="flex items-center space-x-3">
             <img src="/pulse.png" alt="Pulse Finance" className="h-8 w-8" />
-            <span className="text-2xl font-bold">Pulse Finance</span>
+            <span className="text-2xl font-bold italic">Pulse</span>
           </Link>
           
           <nav className="hidden md:flex items-center space-x-8">
