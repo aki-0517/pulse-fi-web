@@ -52,6 +52,36 @@ const AssetCard = ({ icon, name, balance, balanceUSD, earnings, earningsCoin, ap
   </div>
 );
 
+const DisabledAssetCard = ({ icon, name, balance, balanceUSD, earnings, earningsCoin, apr }: Asset) => (
+  <div className="bg-gray-800/40 rounded-2xl p-6 flex flex-col opacity-50 cursor-not-allowed">
+    <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center space-x-3">
+        <img src={icon} alt={name} className="h-10 w-10 rounded-full" />
+        <div>
+          <p className="font-bold text-xl text-white">{balance} {name}</p>
+          <p className="text-gray-400 text-sm">{balanceUSD}</p>
+        </div>
+      </div>
+      <ArrowRight className="text-gray-500" />
+    </div>
+    <div className="flex-grow space-y-4 mb-6">
+      <div className="flex justify-between items-baseline">
+        <p className="text-gray-400 text-sm">Earnings</p>
+        <p className="text-white">{earnings} {earningsCoin}</p>
+      </div>
+      <div className="flex justify-between items-baseline">
+        <p className="text-gray-400 text-sm">Net APR</p>
+        <p className="text-green-400 font-bold text-lg">---</p>
+      </div>
+    </div>
+    <button 
+      className="w-full bg-gray-600 text-gray-300 py-3 rounded-full font-medium cursor-not-allowed" 
+      disabled
+    >
+      COMING SOON
+    </button>
+  </div>
+);
 
 const EarnPage: React.FC = () => {
   const [isUnlocked, setIsUnlocked] = useState(false);
@@ -107,6 +137,9 @@ const EarnPage: React.FC = () => {
     setSelectedAsset(null);
   };
 
+  const activePool = assets.find(a => a.name === 'USDC');
+  const inactivePools = assets.filter(a => a.name !== 'USDC');
+
   return (
     <>
       {!isUnlocked && <AccessCodePopup onSuccess={() => setIsUnlocked(true)} />}
@@ -121,14 +154,32 @@ const EarnPage: React.FC = () => {
           <StatCard title="Liquidity Total Supply" value="$54,643,079" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {assets.map((asset) => (
-            <AssetCard 
-              key={asset.name}
-              {...asset}
-              onStartEarning={() => handleOpenPopup(asset)}
-            />
-          ))}
+        {/* Active Pool Section */}
+        <div className="mb-10">
+          <h2 className="text-2xl font-bold text-white mb-4">Active Pool</h2>
+          <div className="flex justify-center">
+            {activePool && (
+              <div className="w-full max-w-sm">
+                <AssetCard 
+                  key={activePool.name}
+                  {...activePool}
+                  onStartEarning={() => handleOpenPopup(activePool)}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Inactive Pools Section */}
+        <div>
+          <h2 className="text-2xl font-bold text-white mb-4">Coming Soon</h2>
+          <div className="flex flex-wrap justify-center gap-6">
+            {inactivePools.map((asset) => (
+              <div key={asset.name} className="w-full max-w-sm">
+                <DisabledAssetCard {...asset} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       {isPopupOpen && selectedAsset && (

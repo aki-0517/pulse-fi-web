@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, Info } from 'lucide-react';
+import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
 interface DepositWithdrawPopupProps {
   asset: {
@@ -11,6 +12,22 @@ interface DepositWithdrawPopupProps {
   };
   onClose: () => void;
 }
+
+// ProtocolsSectionのprotocolsデータをここにも定義（本来は共通化推奨）
+const protocols = [
+  {
+    name: 'Morpho Blue',
+    tvl: 2100000000, // $2.1B
+    logoUrl: 'https://icons.llamao.fi/icons/protocols/morpho?w=48&h=48',
+    color: '#3B82F6',
+  },
+  {
+    name: 'Aave v3',
+    tvl: 5800000000, // $5.8B
+    logoUrl: 'https://icons.llamao.fi/icons/protocols/aave?w=48&h=48',
+    color: '#8B5CF6',
+  },
+];
 
 const DepositWithdrawPopup: React.FC<DepositWithdrawPopupProps> = ({ asset, onClose }) => {
   const [activeTab, setActiveTab] = useState<'deposit' | 'withdraw'>('deposit');
@@ -70,6 +87,42 @@ const DepositWithdrawPopup: React.FC<DepositWithdrawPopupProps> = ({ asset, onCl
             </div>
             <p className="text-xl font-bold">$15,489,962</p>
             <p className="text-xs text-gray-500">15,493,513 {asset.name}</p>
+          </div>
+        </div>
+
+        {/* Protocols円グラフ */}
+        <div className="mb-4">
+          <div className="text-center mb-2 text-lg font-bold text-white">Capital Allocation (by TVL)</div>
+          <div className="flex justify-center items-center" style={{ position: 'relative', height: 160 }}>
+            <ResponsiveContainer width={160} height={160}>
+              <PieChart>
+                <Pie
+                  data={protocols}
+                  dataKey="tvl"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={40}
+                  outerRadius={70}
+                  paddingAngle={2}
+                  label={false}
+                  isAnimationActive={false}
+                >
+                  {protocols.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="flex justify-center gap-3 mt-2 flex-wrap">
+            {protocols.map((p) => (
+              <div key={p.name} className="flex items-center gap-1 mb-1">
+                <span style={{ display: 'inline-block', width: 10, height: 10, background: p.color, borderRadius: '50%' }}></span>
+                <img src={p.logoUrl} alt={p.name} className="w-4 h-4 rounded-full ml-1" />
+                <span className="text-xs text-white ml-1">{p.name}</span>
+              </div>
+            ))}
           </div>
         </div>
 
