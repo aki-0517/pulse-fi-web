@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md">
-      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+    <header className="sticky top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          <div className="flex items-center space-x-3">
+          <Link to="/" className="flex items-center space-x-3">
             <img src="/pulse.png" alt="Pulse Finance" className="h-8 w-8" />
-            <span className="text-2xl font-bold text-gray-900">Pulse Finance</span>
-          </div>
+            <span className="text-2xl font-bold">Pulse Finance</span>
+          </Link>
           
-          <nav className="hidden md:flex items-center space-x-12">
-            <a href="#how-it-works" className="text-gray-600 hover:text-blue-600 transition-colors">How It Works</a>
-            <a href="/" className="text-gray-600 hover:text-blue-600 transition-colors">Docs</a>
-            <button className="bg-blue-600 text-white px-8 py-3 rounded-full hover:bg-blue-700 transition-colors font-medium">
-              Open App
-            </button>
+          <nav className="hidden md:flex items-center space-x-8">
+            <a href="/#how-it-works" className="hover:text-gray-300 transition-colors">How It Works</a>
+            <Link to="/earn" className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors font-medium">
+              Earn
+            </Link>
           </nav>
 
           <button 
@@ -30,13 +30,12 @@ const Header = () => {
         </div>
 
         {isMenuOpen && (
-          <div className="md:hidden py-6 border-t border-gray-100">
-            <nav className="flex flex-col space-y-6">
-              <a href="#how-it-works" className="text-gray-600 hover:text-blue-600 transition-colors">How It Works</a>
-              <a href="#stablecoins" className="text-gray-600 hover:text-blue-600 transition-colors">Stablecoins</a>
-              <button className="bg-blue-600 text-white px-8 py-3 rounded-full hover:bg-blue-700 transition-colors font-medium w-fit">
-                Open App
-              </button>
+          <div className="md:hidden py-4 border-t border-gray-700">
+            <nav className="flex flex-col space-y-4">
+              <a href="/#how-it-works" className="hover:text-gray-300 transition-colors" onClick={() => setIsMenuOpen(false)}>How It Works</a>
+              <Link to="/earn" className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors font-medium w-fit" onClick={() => setIsMenuOpen(false)}>
+                Earn
+              </Link>
             </nav>
           </div>
         )}

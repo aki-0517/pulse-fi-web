@@ -36,8 +36,8 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-white">
-      <div className="max-w-6xl mx-auto px-6 lg:px-8 pt-20">
+    <section className="min-h-[calc(100vh-5rem)] flex items-center justify-center bg-gradient-to-br from-blue-50 to-white">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-20 items-center">
           <div className="text-center lg:text-left">
             <h1 className="text-6xl lg:text-7xl font-bold text-gray-900 mb-12 leading-tight">
