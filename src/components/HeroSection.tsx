@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
 const HeroSection = () => {
@@ -45,9 +46,9 @@ const HeroSection = () => {
               <span className="text-blue-600 block">Yield with Stablecoins</span>
             </h1>
             
-            <button className="bg-blue-600 text-white px-12 py-5 rounded-full hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 flex items-center space-x-3 mx-auto lg:mx-0 text-lg font-medium shadow-xl">
+            <Link to="/earn" className="bg-blue-600 text-white px-12 py-5 rounded-full hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 inline-flex items-center space-x-3 mx-auto lg:mx-0 text-lg font-medium shadow-xl">
               <span>Earn</span>
-            </button>
+            </Link>
           </div>
 
           <div className="relative">
