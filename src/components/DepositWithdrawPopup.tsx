@@ -20,12 +20,14 @@ const protocols = [
     tvl: 2100000000, // $2.1B
     logoUrl: 'https://icons.llamao.fi/icons/protocols/morpho?w=48&h=48',
     color: '#3B82F6',
+    chainLogoUrl: 'https://icons.llamao.fi/icons/chains/rsz_base?w=48&h=48', // Base
   },
   {
     name: 'Aave v3',
     tvl: 5800000000, // $5.8B
     logoUrl: 'https://icons.llamao.fi/icons/protocols/aave?w=48&h=48',
     color: '#8B5CF6',
+    chainLogoUrl: 'https://icons.llamao.fi/icons/chains/rsz_arbitrum?w=48&h=48', // Arbitrum
   },
 ];
 
@@ -35,7 +37,7 @@ const DepositWithdrawPopup: React.FC<DepositWithdrawPopupProps> = ({ asset, onCl
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-      <div className="bg-[#1c1c24] text-white rounded-3xl p-8 max-w-md w-full relative">
+      <div className="bg-[#1c1c24] text-white rounded-3xl p-8 max-w-lg w-full relative">
         <button onClick={onClose} className="absolute top-6 right-6 text-gray-400 hover:text-white">
           <X size={24} />
         </button>
@@ -93,36 +95,51 @@ const DepositWithdrawPopup: React.FC<DepositWithdrawPopupProps> = ({ asset, onCl
         {/* Protocols円グラフ */}
         <div className="mb-4">
           <div className="text-center mb-2 text-lg font-bold text-white">Capital Allocation (by TVL)</div>
-          <div className="flex justify-center items-center" style={{ position: 'relative', height: 160 }}>
-            <ResponsiveContainer width={160} height={160}>
-              <PieChart>
-                <Pie
-                  data={protocols}
-                  dataKey="tvl"
-                  nameKey="name"
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={40}
-                  outerRadius={70}
-                  paddingAngle={2}
-                  label={false}
-                  isAnimationActive={false}
-                >
-                  {protocols.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="flex justify-center gap-3 mt-2 flex-wrap">
-            {protocols.map((p) => (
-              <div key={p.name} className="flex items-center gap-1 mb-1">
-                <span style={{ display: 'inline-block', width: 10, height: 10, background: p.color, borderRadius: '50%' }}></span>
-                <img src={p.logoUrl} alt={p.name} className="w-4 h-4 rounded-full ml-1" />
-                <span className="text-xs text-white ml-1">{p.name}</span>
-              </div>
-            ))}
+          <div className="flex justify-center items-center gap-6" style={{ position: 'relative', minHeight: 160 }}>
+            <div>
+              <ResponsiveContainer width={160} height={160}>
+                <PieChart>
+                  <Pie
+                    data={protocols}
+                    dataKey="tvl"
+                    nameKey="name"
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={40}
+                    outerRadius={70}
+                    paddingAngle={2}
+                    label={false}
+                    isAnimationActive={false}
+                  >
+                    {protocols.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="flex flex-col items-start gap-2 mt-2 flex-wrap">
+              {(() => {
+                // TVL合計を計算
+                const totalTVL = protocols.reduce((sum, p) => sum + p.tvl, 0);
+                return protocols.map((p) => {
+                  const percent = ((p.tvl / totalTVL) * 100).toFixed(1);
+                  return (
+                    <div key={p.name} className="flex items-center justify-between w-full mb-1 pr-2">
+                      <div className="flex items-center gap-2">
+                        <span style={{ display: 'inline-block', width: 12, height: 12, background: p.color, borderRadius: '50%' }}></span>
+                        <span className="relative inline-block w-9 h-9 ml-1">
+                          <img src={p.chainLogoUrl} alt={p.name + ' chain'} className="w-9 h-9 rounded-full" />
+                          <img src={p.logoUrl} alt={p.name} className="w-5 h-5 rounded-full absolute right-0 bottom-0 border-2 border-[#1c1c24] bg-white" />
+                        </span>
+                        <span className="text-base font-bold text-white ml-2" style={{fontSize: '1.1rem'}}>{p.name}</span>
+                      </div>
+                      <span className="text-base font-bold text-white ml-3">{percent}%</span>
+                    </div>
+                  );
+                });
+              })()}
+            </div>
           </div>
         </div>
 
