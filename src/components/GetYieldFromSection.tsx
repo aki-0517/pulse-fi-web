@@ -19,11 +19,11 @@ const GetYieldFromSection = () => {
     {
       name: 'Spark',
       logoUrl: 'https://icons.llamao.fi/icons/protocols/spark?w=48&h=48'
-    },
-    {
-      name: 'Compound',
-      logoUrl: 'https://icons.llamao.fi/icons/protocols/compound?w=48&h=48'
     }
+    // {
+    //   name: 'Curve',
+    //   logoUrl: 'https://icons.llamao.fi/icons/protocols/curve?w=48&h=48'
+    // }
   ];
 
   const duplicatedYieldSources = [...yieldSources, ...yieldSources];

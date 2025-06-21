@@ -167,7 +167,7 @@ const ProtocolsSection = () => {
               We're constantly expanding our protocol integrations to bring you even more yield opportunities.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <span className="bg-white px-4 py-2 rounded-lg text-sm text-gray-600 border">Compound V3</span>
+              {/* <span className="bg-white px-4 py-2 rounded-lg text-sm text-gray-600 border">Curve</span> */}
               <span className="bg-white px-4 py-2 rounded-lg text-sm text-gray-600 border">Yearn Finance</span>
               <span className="bg-white px-4 py-2 rounded-lg text-sm text-gray-600 border">Convex</span>
               <span className="bg-white px-4 py-2 rounded-lg text-sm text-gray-600 border">Curve</span>
