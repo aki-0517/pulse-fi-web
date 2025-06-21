@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { X, Info } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { useAccount } from 'wagmi';
+import { useAppKit } from '@reown/appkit/react';
 
 interface DepositWithdrawPopupProps {
   asset: {
@@ -34,6 +36,8 @@ const protocols = [
 const DepositWithdrawPopup: React.FC<DepositWithdrawPopupProps> = ({ asset, onClose }) => {
   const [activeTab, setActiveTab] = useState<'deposit' | 'withdraw'>('deposit');
   const [amount, setAmount] = useState('');
+  const { isConnected } = useAccount();
+  const { open } = useAppKit();
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
@@ -160,9 +164,18 @@ const DepositWithdrawPopup: React.FC<DepositWithdrawPopupProps> = ({ asset, onCl
             </div>
         </div>
 
-        <button className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition-colors font-medium text-lg uppercase">
-          {activeTab}
-        </button>
+        {isConnected ? (
+          <button className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition-colors font-medium text-lg uppercase">
+            {activeTab}
+          </button>
+        ) : (
+          <button 
+            onClick={() => open()}
+            className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition-colors font-medium text-lg uppercase"
+          >
+            Connect Wallet
+          </button>
+        )}
       </div>
     </div>
   );

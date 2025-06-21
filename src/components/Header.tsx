@@ -29,7 +29,7 @@ const Header = () => {
   const [isChainDropdownOpen, setChainDropdownOpen] = useState(false);
   const [isAddressDropdownOpen, setAddressDropdownOpen] = useState(false);
   const [isNetworkDropdownOpen, setNetworkDropdownOpen] = useState(false);
-  const [networkMode, setNetworkMode] = useState<'mainnet' | 'testnet'>('mainnet');
+  const [networkMode, setNetworkMode] = useState<'mainnet' | 'testnet'>('testnet');
 
   const location = useLocation();
   const { open } = useAppKit();
@@ -129,8 +129,10 @@ const Header = () => {
                 <ul className="absolute left-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-md shadow-lg z-20">
                   <li>
                     <button
-                      onClick={() => { setNetworkMode('mainnet'); setNetworkDropdownOpen(false); }}
-                      className="flex items-center w-full text-left px-4 py-2 text-sm text-white hover:bg-gray-700"
+                      onClick={() => { /* setNetworkMode('mainnet'); setNetworkDropdownOpen(false); */ }}
+                      className="flex items-center w-full text-left px-4 py-2 text-sm text-white disabled:opacity-50"
+                      disabled
+                      title="Coming soon"
                     >
                       Mainnet
                     </button>
@@ -223,8 +225,10 @@ const Header = () => {
             <ul className="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-md shadow-lg z-20">
               <li>
                 <button
-                  onClick={() => { setNetworkMode('mainnet'); setNetworkDropdownOpen(false); }}
-                  className="flex items-center w-full text-left px-4 py-2 text-sm text-white hover:bg-gray-700"
+                  onClick={() => { /* setNetworkMode('mainnet'); setNetworkDropdownOpen(false); */ }}
+                  className="flex items-center w-full text-left px-4 py-2 text-sm text-white disabled:opacity-50"
+                  disabled
+                  title="Coming soon"
                 >
                   Mainnet
                 </button>
