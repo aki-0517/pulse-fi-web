@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import AccessCodePopup from '../components/AccessCodePopup';
-import DepositWithdrawPopup from '../components/DepositWithdrawPopup';
 
 const StatCard = ({ title, value, change }: { title: string, value: string, change?: string }) => (
   <div className="bg-gray-900/50 p-6 rounded-2xl">
@@ -21,7 +21,7 @@ interface Asset {
   apr: string;
 }
 
-const AssetCard = ({ icon, name, balance, balanceUSD, earnings, earningsCoin, apr, onStartEarning }: { icon: string, name: string, balance: string, balanceUSD: string, earnings: string, earningsCoin: string, apr: string, onStartEarning: () => void }) => (
+const AssetCard = ({ icon, name, balance, balanceUSD, earnings, earningsCoin, apr }: Asset) => (
   <div className="bg-gray-900/50 rounded-2xl p-6 flex flex-col">
     <div className="flex items-center justify-between mb-4">
       <div className="flex items-center space-x-3">
@@ -31,7 +31,9 @@ const AssetCard = ({ icon, name, balance, balanceUSD, earnings, earningsCoin, ap
           <p className="text-gray-400 text-sm">{balanceUSD}</p>
         </div>
       </div>
-      <ArrowRight className="text-gray-500" />
+      <Link to="/earn/testnet/usdc">
+        <ArrowRight className="text-gray-500" />
+      </Link>
     </div>
     <div className="flex-grow space-y-4 mb-6">
       <div className="flex justify-between items-baseline">
@@ -43,12 +45,12 @@ const AssetCard = ({ icon, name, balance, balanceUSD, earnings, earningsCoin, ap
         <p className="text-green-400 font-bold text-lg">{apr}</p>
       </div>
     </div>
-    <button 
-      onClick={onStartEarning}
-      className="w-full bg-blue-600 text-white py-3 rounded-full hover:bg-blue-700 transition-colors font-medium"
+    <Link 
+      to="/earn/testnet/usdc"
+      className="w-full bg-blue-600 text-white py-3 rounded-full hover:bg-blue-700 transition-colors font-medium text-center"
     >
       START EARNING
-    </button>
+    </Link>
   </div>
 );
 
@@ -85,11 +87,9 @@ const DisabledAssetCard = ({ icon, name, balance, balanceUSD, earnings, earnings
 
 const EarnPage: React.FC = () => {
   const [isUnlocked, setIsUnlocked] = useState(false);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
 
   const assets: Asset[] = [
-    { 
+    {
       icon: "https://seeklogo.com/images/U/usd-coin-usdc-logo-CB4C5B1C51-seeklogo.com.png",
       name: "USDC",
       balance: "24.881",
@@ -127,23 +127,13 @@ const EarnPage: React.FC = () => {
     }
   ];
 
-  const handleOpenPopup = (asset: Asset) => {
-    setSelectedAsset(asset);
-    setIsPopupOpen(true);
-  };
-
-  const handleClosePopup = () => {
-    setIsPopupOpen(false);
-    setSelectedAsset(null);
-  };
-
   const activePool = assets.find(a => a.name === 'USDC');
   const inactivePools = assets.filter(a => a.name !== 'USDC');
 
   return (
     <>
       {!isUnlocked && <AccessCodePopup onSuccess={() => setIsUnlocked(true)} />}
-      <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-24 ${!isUnlocked || isPopupOpen ? 'blur-sm' : ''}`}>
+      <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-24 ${!isUnlocked ? 'blur-sm' : ''}`}>
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold mb-2 text-white">Earning</h1>
           <p className="text-xl text-gray-400">The Best Stablecoin Yields In 1-Click</p>
@@ -163,7 +153,6 @@ const EarnPage: React.FC = () => {
                 <AssetCard 
                   key={activePool.name}
                   {...activePool}
-                  onStartEarning={() => handleOpenPopup(activePool)}
                 />
               </div>
             )}
@@ -182,9 +171,6 @@ const EarnPage: React.FC = () => {
           </div>
         </div>
       </div>
-      {isPopupOpen && selectedAsset && (
-        <DepositWithdrawPopup asset={selectedAsset} onClose={handleClosePopup} />
-      )}
     </>
   );
 };

@@ -73,7 +73,7 @@ const Header = () => {
     };
   }, []);
 
-  const isEarnPage = location.pathname === "/earn";
+  const isEarnPage = location.pathname.startsWith("/earn");
   const currentChain = chains.find(chain => chain.id === chainId);
 
   const displayChains = chains.filter(chain => {
