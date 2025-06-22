@@ -18,7 +18,7 @@ interface VaultsResponse {
 
 const GRAPHQL_ENDPOINT = 'https://api.morpho.org/graphql';
 
-const MorphoVaultsList: React.FC = () => {
+const MorphoUSDSMarkets: React.FC = () => {
   const [vaults, setVaults] = useState<VaultItem[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -72,11 +72,11 @@ const MorphoVaultsList: React.FC = () => {
         } while (skip < totalCount);
 
         // totalAssetsUsd が null または 0 のものを除外し、
-        // vault.name に "USDC" を含むものだけを残す
+        // vault.name に "USDS" を含むものだけを残す
         const filtered = allVaults.filter(v =>
           v.state.totalAssetsUsd != null &&
           v.state.totalAssetsUsd > 0 &&
-          v.name.includes("USDC")
+          v.name.includes("USDS")
         );
 
         setVaults(filtered);
@@ -138,4 +138,4 @@ const MorphoVaultsList: React.FC = () => {
   );
 };
 
-export default MorphoVaultsList;
+export default MorphoUSDSMarkets; 

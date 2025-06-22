@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const StablecoinsSection = () => {
   const supportedCoins = [
     {
@@ -15,11 +17,6 @@ const StablecoinsSection = () => {
       name: 'USDS',
       logoUrl: 'https://s2.coinmarketcap.com/static/img/coins/200x200/33039.png'
     },
-    {
-      symbol: 'EURC',
-      name: 'Euro Coin',
-      logoUrl: 'https://s2.coinmarketcap.com/static/img/coins/200x200/20641.png'
-    }
   ];
 
   return (
@@ -31,18 +28,24 @@ const StablecoinsSection = () => {
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {supportedCoins.map((coin, index) => (
-            <div
-              key={index}
-              className="bg-white/10 rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center"
-            >
-              <div className="w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                <img src={coin.logoUrl} alt={`${coin.symbol} logo`} className="w-16 h-16 rounded-full" />
+            <Link to={`/strategy/${coin.symbol.toLowerCase()}`} key={index}>
+              <div
+                className="bg-white/10 rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center h-full relative hover:ring-2 hover:ring-blue-500"
+              >
+                <div className="w-16 h-16 flex items-center justify-center mx-auto mb-6">
+                  <img src={coin.logoUrl} alt={`${coin.symbol} logo`} className="w-16 h-16 rounded-full" />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-2">{coin.symbol}</h3>
+                <p className="text-gray-200">{coin.name}</p>
+                <div className="absolute bottom-4 right-4 text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </div>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2">{coin.symbol}</h3>
-              <p className="text-gray-200">{coin.name}</p>
-            </div>
+            </Link>
           ))}
         </div>
 

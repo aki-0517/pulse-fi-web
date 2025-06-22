@@ -55,28 +55,33 @@ const HeroSection = () => {
             <div className="bg-white rounded-3xl shadow-2xl p-12 border border-blue-100">
               <div className="space-y-8">
                 {pools.map((pool, index) => (
-                  <div key={index} className={`flex items-center justify-between p-6 ${pool.bgColor} rounded-2xl`}>
-                    <div className="flex items-center space-x-4">
-                      <img src={pool.logoUrl} alt={`${pool.name} logo`} className="w-12 h-12 rounded-full" />
-                      <div>
-                        <div className="font-semibold text-gray-900">{pool.name}</div>
-                        <div className="flex -space-x-2 overflow-hidden mt-1">
-                          {pool.chains.map((chain) => (
-                            <img
-                              key={chain}
-                              className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-                              src={chainLogos[chain]}
-                              alt={chain}
-                            />
-                          ))}
+                  <Link to={`/strategy/${pool.name.split(' ')[0].toLowerCase()}`} key={index}>
+                    <div className={`flex items-center justify-between p-6 ${pool.bgColor} rounded-2xl transition-transform duration-300 ease-in-out hover:scale-[1.03]`}>
+                      <div className="flex items-center space-x-4">
+                        <img src={pool.logoUrl} alt={`${pool.name} logo`} className="w-12 h-12 rounded-full" />
+                        <div>
+                          <div className="font-semibold text-gray-900">{pool.name}</div>
+                          <div className="flex -space-x-2 overflow-hidden mt-1">
+                            {pool.chains.map((chain) => (
+                              <img
+                                key={chain}
+                                className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                                src={chainLogos[chain]}
+                                alt={chain}
+                              />
+                            ))}
+                          </div>
                         </div>
                       </div>
+                      <div className="flex items-center space-x-4">
+                        <div className="text-right">
+                          <div className="font-bold text-green-600 text-lg">{pool.apy}</div>
+                          <div className="text-sm text-gray-600">{pool.tvl}</div>
+                        </div>
+                        <ArrowRight className="text-gray-400" />
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <div className="font-bold text-green-600 text-lg">{pool.apy}</div>
-                      <div className="text-sm text-gray-600">{pool.tvl}</div>
-                    </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
