@@ -7,26 +7,29 @@ const HeroSection = () => {
     {
       name: 'USDC Pool',
       chains: ['Ethereum', 'Base', 'Arbitrum'],
-      apy: '+8.2%',
+      apy: '+9.52%',
       tvl: '$12.5K',
       logoUrl: 'https://seeklogo.com/images/U/usd-coin-usdc-logo-CB4C5B1C51-seeklogo.com.png',
       bgColor: 'bg-blue-50',
+      estimatedApy: '9.52%',
     },
     {
       name: 'USDT Pool',
       chains: ['Ethereum', 'Base', 'Arbitrum'],
-      apy: '+15.7%',
+      apy: '+7.63%',
       tvl: '$8.3K',
       logoUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3c-lor0igW6k_zmXiOhn5gK3hrz8ylzf0Jw&s',
       bgColor: 'bg-green-50',
+      estimatedApy: '7.63%',
     },
     {
       name: 'USDS Pool',
       chains: ['Ethereum', 'Base', 'Arbitrum'],
-      apy: '+11.4%',
+      apy: '+1.73%',
       tvl: '$15.2K',
       logoUrl: 'https://s2.coinmarketcap.com/static/img/coins/200x200/33039.png', // Placeholder
       bgColor: 'bg-purple-50',
+      estimatedApy: '1.73%',
     }
   ];
 
