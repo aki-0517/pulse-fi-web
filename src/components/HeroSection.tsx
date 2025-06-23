@@ -6,7 +6,7 @@ const HeroSection = () => {
   const pools = [
     {
       name: 'USDC Pool',
-      chains: ['Ethereum', 'Base', 'Arbitrum'],
+      chains: ['Ethereum', 'Base', 'Arbitrum', 'Unichain', 'Avalanche'],
       apy: '+9.52%',
       tvl: '$12.5K',
       logoUrl: 'https://seeklogo.com/images/U/usd-coin-usdc-logo-CB4C5B1C51-seeklogo.com.png',
@@ -15,7 +15,7 @@ const HeroSection = () => {
     },
     {
       name: 'USDT Pool',
-      chains: ['Ethereum', 'Base', 'Arbitrum'],
+      chains: ['Ethereum', 'Base', 'Arbitrum', 'Polygon'],
       apy: '+7.63%',
       tvl: '$8.3K',
       logoUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3c-lor0igW6k_zmXiOhn5gK3hrz8ylzf0Jw&s',
@@ -24,7 +24,7 @@ const HeroSection = () => {
     },
     {
       name: 'USDS Pool',
-      chains: ['Ethereum', 'Base', 'Arbitrum'],
+      chains: ['Ethereum', 'Base'],
       apy: '+1.73%',
       tvl: '$15.2K',
       logoUrl: 'https://s2.coinmarketcap.com/static/img/coins/200x200/33039.png', // Placeholder
@@ -37,6 +37,9 @@ const HeroSection = () => {
     Ethereum: 'https://seeklogo.com/images/E/ethereum-logo-EC6CDBA45B-seeklogo.com.png',
     Base: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08Z3uISD3td6WwIXPMKrpC7auP-LECoHOXA&s',
     Arbitrum: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdvncrIV74_kXqcACD8doVBeG5aDHHXRDDqw&s',
+    Unichain: 'https://icons.llamao.fi/icons/chains/rsz_unichain?w=48&h=48',
+    Avalanche: 'https://icons.llamao.fi/icons/chains/rsz_avalanche?w=48&h=48',
+    Polygon: 'https://icons.llamao.fi/icons/chains/rsz_polygon?w=48&h=48',
   };
 
   return (
