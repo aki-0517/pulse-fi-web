@@ -224,9 +224,9 @@ const UnifiedMarkets: React.FC<UnifiedMarketsProps> = ({ symbol }) => {
       try {
         const [morpho, euler] = await Promise.all([fetchMorpho(), fetchEuler()]);
         setVaults([...morpho, ...euler]);
+        setLoading(false);
       } catch (e) {
         setError('Failed to fetch data');
-      } finally {
         setLoading(false);
       }
     };

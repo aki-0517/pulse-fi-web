@@ -30,7 +30,7 @@ const AccessCodePopup: React.FC<AccessCodePopupProps> = ({ onSuccess }) => {
         <h2 className="text-2xl font-bold text-white text-center mb-6">Enter Access Code</h2>
         <form onSubmit={handleSubmit}>
           <input
-            type="text"
+            type="password"
             value={code}
             onChange={(e) => setCode(e.target.value)}
             maxLength={6}
