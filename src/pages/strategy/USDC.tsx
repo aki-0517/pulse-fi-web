@@ -1,6 +1,5 @@
 import React from 'react';
-import MorphoUSDCMarkets from '../../components/MorphoUSDCMarkets';
-// import EulerUSDCMarkets from '../../components/EulerUSDCMarkets';
+import UnifiedMarkets from '../../components/UnifiedMarkets';
 
 const USDCPage: React.FC = () => {
   return (
@@ -13,8 +12,7 @@ const USDCPage: React.FC = () => {
           </div>
           <p className="text-xl text-gray-400">Analytics of Stablecoin Yields</p>
         </div>
-        {/* <EulerUSDCMarkets /> */}
-        <MorphoUSDCMarkets />
+        <UnifiedMarkets symbol="USDC" />
       </div>
     </>
   );

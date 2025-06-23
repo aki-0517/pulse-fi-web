@@ -14,6 +14,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/rpc/, ''),
       },
+      '/subgraphs': {
+        target: 'https://api.thegraph.com',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/subgraphs/, '')
+      },
     },
   },
 });
