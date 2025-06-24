@@ -1,10 +1,21 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import pulseLogo from "/pulse.png";
 import { useAppKit } from "@reown/appkit/react";
 import { useAccount, useDisconnect, useChainId, useSwitchChain } from 'wagmi';
 import { mainnet, arbitrum, base, sepolia, arbitrumSepolia, baseSepolia } from '@reown/appkit/networks';
+
+// Avalanche Fuji チェーン定義
+const avalancheFuji = {
+  id: 43113,
+  name: 'Avalanche Fuji',
+  network: 'avalanche-fuji',
+  nativeCurrency: { name: 'Avalanche', symbol: 'AVAX', decimals: 18 },
+  rpcUrls: { default: { http: ['https://api.avax-test.network/ext/bc/C/rpc'] } },
+  blockExplorers: { default: { name: 'SnowTrace', url: 'https://testnet.snowtrace.io' } },
+  testnet: true,
+};
 
 const getChainLogo = (chainId: number | undefined) => {
   switch (chainId) {
@@ -18,6 +29,8 @@ const getChainLogo = (chainId: number | undefined) => {
       return 'https://icons.llamao.fi/icons/chains/rsz_base?w=48&h=48';
     case sepolia.id:
       return 'https://icons.llamao.fi/icons/chains/rsz_ethereum?w=48&h=48';
+    case 43113:
+      return 'https://icons.llamao.fi/icons/chains/rsz_avalanche?w=48&h=48';
     default:
       // Return a default or transparent image if no match
       return 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
@@ -36,7 +49,16 @@ const Header = () => {
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
   const chainId = useChainId();
-  const { chains, switchChain } = useSwitchChain();
+  const { chains: wagmiChains, switchChain } = useSwitchChain();
+
+  // Fujiを含めたチェーンリストを作成
+  const chains = useMemo(() => {
+    // wagmiのchainsにfujiがなければ追加
+    if (!wagmiChains.some(c => c.id === 43113)) {
+      return [...wagmiChains, avalancheFuji];
+    }
+    return wagmiChains;
+  }, [wagmiChains]);
 
   const chainDropdownRef = useRef<HTMLDivElement>(null);
   const addressDropdownRef = useRef<HTMLDivElement>(null);
@@ -162,12 +184,29 @@ const Header = () => {
                         {displayChains.map((chain) => (
                           <li key={chain.id}>
                             <button
-                              onClick={() => {
+                              onClick={async () => {
                                 if (switchChain) {
+                                  if (chain.id === 43113 && typeof window !== 'undefined' && (window as any).ethereum) {
+                                    // Fujiの場合はMetaMaskにチェーン追加リクエスト
+                                    try {
+                                      await (window as any).ethereum.request({
+                                        method: 'wallet_addEthereumChain',
+                                        params: [{
+                                          chainId: '0xa869', // 43113 in hex
+                                          chainName: 'Avalanche Fuji',
+                                          nativeCurrency: { name: 'Avalanche', symbol: 'AVAX', decimals: 18 },
+                                          rpcUrls: ['https://api.avax-test.network/ext/bc/C/rpc'],
+                                          blockExplorerUrls: ['https://testnet.snowtrace.io'],
+                                        }],
+                                      });
+                                    } catch (e) {
+                                      // 失敗時は何もしない
+                                    }
+                                  }
                                   switchChain({ chainId: chain.id });
                                 }
                                 setChainDropdownOpen(false);
-                                setIsMenuOpen(false);
+                                setIsMenuOpen && setIsMenuOpen(false);
                               }}
                               className="flex items-center w-full text-left px-4 py-2 text-sm text-white hover:bg-gray-700"
                               disabled={!switchChain || chainId === chain.id}
@@ -257,11 +296,29 @@ const Header = () => {
               {displayChains.map((chain) => (
                 <li key={chain.id}>
                   <button
-                    onClick={() => {
+                    onClick={async () => {
                       if (switchChain) {
+                        if (chain.id === 43113 && typeof window !== 'undefined' && (window as any).ethereum) {
+                          // Fujiの場合はMetaMaskにチェーン追加リクエスト
+                          try {
+                            await (window as any).ethereum.request({
+                              method: 'wallet_addEthereumChain',
+                              params: [{
+                                chainId: '0xa869', // 43113 in hex
+                                chainName: 'Avalanche Fuji',
+                                nativeCurrency: { name: 'Avalanche', symbol: 'AVAX', decimals: 18 },
+                                rpcUrls: ['https://api.avax-test.network/ext/bc/C/rpc'],
+                                blockExplorerUrls: ['https://testnet.snowtrace.io'],
+                              }],
+                            });
+                          } catch (e) {
+                            // 失敗時は何もしない
+                          }
+                        }
                         switchChain({ chainId: chain.id });
                       }
                       setChainDropdownOpen(false);
+                      setIsMenuOpen && setIsMenuOpen(false);
                     }}
                     className="flex items-center w-full text-left px-4 py-2 text-sm text-white hover:bg-gray-700"
                     disabled={!switchChain || chainId === chain.id}
