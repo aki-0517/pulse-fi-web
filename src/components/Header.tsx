@@ -362,7 +362,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-black text-white">
+    <header className="bg-black text-white" style={{ zIndex: 100, position: 'relative' }}>
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-20">
           <Link to="/" className="flex items-center space-x-3">
